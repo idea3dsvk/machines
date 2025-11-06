@@ -93,7 +93,15 @@ supabase-storage-manuals.sql
 
 Vytvorí bucket `device-manuals` pre ukladanie PDF súborov
 
-### 11. Test dáta (voliteľné)
+### 11. Pridanie minimálneho množstva
+
+```bash
+supabase-add-min-quantity.sql
+```
+
+Pridá stĺpec `min_quantity` pre dynamické upozornenia na nízky stav zásob
+
+### 12. Test dáta (voliteľné)
 
 ```bash
 supabase-test-data.sql
@@ -135,6 +143,7 @@ CREATE TABLE spare_parts (
   name TEXT NOT NULL,
   sku TEXT UNIQUE NOT NULL,
   quantity INTEGER NOT NULL,
+  min_quantity INTEGER NOT NULL DEFAULT 10,
   location TEXT NOT NULL,
   device_id TEXT REFERENCES devices(id),
   device_name TEXT
