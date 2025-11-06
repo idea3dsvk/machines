@@ -112,7 +112,24 @@ export class AuthService {
   }
 
   /**
-   * Prihlásenie používateľa
+   * Prihlásenie používateľa s emailom a heslom
+   */
+  loginWithEmail(email: string, password: string): Observable<boolean> {
+    console.log('loginWithEmail() called with email:', email);
+    console.log('enableMockData:', environment.enableMockData);
+    
+    // Pre development môžeme používať mock prihlásenie
+    if (environment.enableMockData) {
+      console.log('Using mock login');
+      const role = email.includes('admin') ? 'admin' : 'technician';
+      return this.mockLogin(role);
+    }
+
+    return this.performSupabaseLogin(email, password);
+  }
+
+  /**
+   * Prihlásenie používateľa (legacy metóda pre spätnu kompatibilitu)
    */
   login(role: 'admin' | 'technician', password?: string): Observable<boolean> {
     console.log('login() called with role:', role);
@@ -128,6 +145,14 @@ export class AuthService {
     const email = `${role}@example.com`;
     const pwd = password || 'password123';
     
+    return this.performSupabaseLogin(email, pwd);
+  }
+
+  /**
+   * Vykonať Supabase prihlásenie
+   */
+  private performSupabaseLogin(email: string, password: string): Observable<boolean> {
+    
     console.log('Attempting Supabase login with email:', email);
     
     // Použiť direct fetch pretože Supabase JS klient má problém s promise resolution
@@ -139,7 +164,7 @@ export class AuthService {
       },
       body: JSON.stringify({
         email,
-        password: pwd,
+        password: password,
       }),
     })
       .then(async res => {
@@ -184,22 +209,25 @@ export class AuthService {
             localStorage.setItem('currentUser', JSON.stringify(user));
             console.log('User profile loaded:', user);
           } else {
-            console.warn('No profile found, using data from auth');
+            console.warn('No profile found, using data from auth user_metadata');
+            // Získať rolu z user metadata
+            const userRole = data.user.user_metadata?.role || data.user.raw_user_meta_data?.role || 'technician';
             const user: User = {
               id: data.user.id,
               email: data.user.email,
-              role: 'admin', // default
+              role: userRole,
             };
             this.currentUser.set(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
         } catch (err) {
           console.error('Error loading user profile:', err);
-          // Fallback - použiť data z auth
+          // Fallback - použiť rolu z user metadata
+          const userRole = data.user.user_metadata?.role || data.user.raw_user_meta_data?.role || 'technician';
           const user: User = {
             id: data.user.id,
             email: data.user.email,
-            role: 'admin',
+            role: userRole,
           };
           this.currentUser.set(user);
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -228,8 +256,7 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Login catchError:', error);
-        // Fallback na mock prihlásenie pri chybe
-        return this.mockLogin(role);
+        return of(false);
       })
     );
   }

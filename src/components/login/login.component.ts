@@ -30,10 +30,8 @@ export class LoginComponent {
 
     this.isLoading.set(true);
 
-    // Určiť rolu z emailu
-    const role = emailValue.includes('admin') ? 'admin' : 'technician';
-
-    this.authService.login(role, passwordValue).subscribe({
+    // Prihlásenie cez email - rola sa načíta z Supabase
+    this.authService.loginWithEmail(emailValue, passwordValue).subscribe({
       next: (success) => {
         this.isLoading.set(false);
         if (success) {
