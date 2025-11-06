@@ -16,20 +16,21 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/equipment-maintenance-hub.git"
+    "url": "https://github.com/idea3dsvk/machines.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/equipment-maintenance-hub/issues"
+    "url": "https://github.com/idea3dsvk/machines/issues"
   },
-  "homepage": "https://github.com/yourusername/equipment-maintenance-hub#readme",
+  "homepage": "https://idea3dsvk.github.io/machines/",
   "private": false,
   "type": "module",
   "scripts": {
     "dev": "ng serve",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build --configuration=production",
+    "build:prod": "ng build --configuration=production --base-href /machines/",
     "preview": "ng serve --configuration=production",
+    "deploy": "npm run build:prod && gh-pages -d dist/equipment-maintenance-hub/browser",
     "test": "echo \"No tests configured yet\" && exit 0"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.0",
+    "gh-pages": "^6.3.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
