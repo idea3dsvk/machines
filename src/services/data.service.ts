@@ -1074,4 +1074,51 @@ export class DataService {
       })
     );
   }
+
+  deleteMaintenanceLog(logId: string): Observable<void> {
+    console.log('🗑️ DataService.deleteMaintenanceLog() called for:', logId);
+    
+    const deleteLocal = () => {
+      this.logs.update(logs => logs.filter(log => log.id !== logId));
+    };
+
+    if (environment.enableMockData) {
+      deleteLocal();
+      return of(void 0).pipe(delay(300));
+    }
+
+    const token = localStorage.getItem('supabase.auth.token');
+    if (!token) {
+      console.warn('⚠️ No auth token found');
+      return of(void 0);
+    }
+
+    const tokenData = JSON.parse(token);
+    
+    return from(
+      fetch(`${environment.supabase.url}/rest/v1/maintenance_logs?id=eq.${logId}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': environment.supabase.anonKey,
+          'Authorization': `Bearer ${tokenData.access_token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(res => {
+        console.log('📥 Delete response status:', res.status);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return;
+      })
+    ).pipe(
+      tap(() => {
+        console.log('✅ Maintenance log deleted from Supabase');
+        deleteLocal();
+      }),
+      map(() => void 0),
+      catchError(error => {
+        console.error('❌ Error deleting maintenance log:', error);
+        throw error;
+      })
+    );
+  }
 }

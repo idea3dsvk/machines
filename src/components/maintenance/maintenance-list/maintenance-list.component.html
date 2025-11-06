@@ -21,6 +21,9 @@
             <th class="py-3 px-4">{{ 'DATE' | translate }}</th>
             <th class="py-3 px-4">{{ 'TYPE' | translate }}</th>
             <th class="py-3 px-4">{{ 'NOTES' | translate }}</th>
+            @if (authService.isAdmin()) {
+              <th class="py-3 px-4 text-center">{{ 'ACTIONS' | translate }}</th>
+            }
           </tr>
         </thead>
         <tbody class="divide-y">
@@ -39,6 +42,17 @@
                 }
               </td>
               <td class="py-3 px-4 text-gray-600 text-sm max-w-xs truncate">{{ log.notes }}</td>
+              @if (authService.isAdmin()) {
+                <td class="py-3 px-4 text-center">
+                  <button 
+                    (click)="deleteLog(log.id, log.deviceName)" 
+                    class="text-red-600 hover:text-red-800 font-medium text-sm"
+                    title="Vymazať záznam"
+                  >
+                    🗑️ {{ 'DELETE' | translate }}
+                  </button>
+                </td>
+              }
             </tr>
           }
         </tbody>

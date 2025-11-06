@@ -13,6 +13,7 @@ const translations = {
     LOGOUT: 'Logout',
     LOADING_DATA: 'Loading data...',
     PLEASE_WAIT: 'Please wait a moment.',
+    DELETE: 'Delete',
 
     // Login
     LOGIN_TITLE: 'Equipment Maintenance Hub',
@@ -159,6 +160,7 @@ const translations = {
     LOGOUT: 'Odhlásiť sa',
     LOADING_DATA: 'Načítavam dáta...',
     PLEASE_WAIT: 'Prosím čakajte chvíľu.',
+    DELETE: 'Vymazať',
 
     // Login
     LOGIN_TITLE: 'Centrum Údržby Zariadení',
@@ -305,6 +307,7 @@ const translations = {
     LOGOUT: 'Abmelden',
     LOADING_DATA: 'Daten werden geladen...',
     PLEASE_WAIT: 'Bitte warten Sie einen Moment.',
+    DELETE: 'Löschen',
 
     // Login
     LOGIN_TITLE: 'Gerätewartungs-Hub',
