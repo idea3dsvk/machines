@@ -13,10 +13,10 @@ const MOCK_DEVICES: Device[] = [
 ];
 
 const MOCK_PARTS: SparePart[] = [
-  { id: 'sp-001', name: 'Spindle Bearing', sku: 'BRG-5021', quantity: 15, location: 'Bin A-12' },
-  { id: 'sp-002', name: 'Motor Coolant Pump', sku: 'PMP-C-34', quantity: 4, location: 'Bin B-05' },
-  { id: 'sp-003', name: 'Hydraulic Fluid Filter', sku: 'FIL-H-99', quantity: 45, location: 'Bin A-15' },
-  { id: 'sp-004', name: 'Servo Motor', sku: 'MOT-S-850', quantity: 8, location: 'Bin C-01' },
+  { id: 'sp-001', name: 'Spindle Bearing', sku: 'BRG-5021', quantity: 15, minQuantity: 10, location: 'Bin A-12' },
+  { id: 'sp-002', name: 'Motor Coolant Pump', sku: 'PMP-C-34', quantity: 4, minQuantity: 5, location: 'Bin B-05' },
+  { id: 'sp-003', name: 'Hydraulic Fluid Filter', sku: 'FIL-H-99', quantity: 45, minQuantity: 20, location: 'Bin A-15' },
+  { id: 'sp-004', name: 'Servo Motor', sku: 'MOT-S-850', quantity: 8, minQuantity: 10, location: 'Bin C-01' },
 ];
 
 const MOCK_LOGS: MaintenanceLog[] = [
