@@ -36,6 +36,39 @@ export class DataService {
   private parts = signal<SparePart[]>(MOCK_PARTS);
   private logs = signal<MaintenanceLog[]>(MOCK_LOGS);
 
+  /**
+   * Získať validný token alebo null ak je expirovaný
+   */
+  private getValidToken(): string | null {
+    const token = localStorage.getItem('supabase.auth.token');
+    if (!token) {
+      console.warn('⚠️ No auth token found');
+      return null;
+    }
+
+    try {
+      const tokenData = JSON.parse(token);
+      const expiresAt = tokenData.expires_at;
+      
+      // Check if token is expired (with 1 minute buffer)
+      if (expiresAt && expiresAt * 1000 < Date.now() + 60000) {
+        console.warn('⚠️ Token expired, clearing and redirecting to login');
+        localStorage.removeItem('supabase.auth.token');
+        // Use setTimeout to avoid navigation during HTTP call
+        setTimeout(() => {
+          alert('Vaše prihlásenie vypršalo. Prosím prihláste sa znova.');
+          window.location.href = '/login';
+        }, 100);
+        return null;
+      }
+      
+      return tokenData.access_token;
+    } catch (e) {
+      console.error('❌ Error parsing token:', e);
+      return null;
+    }
+  }
+
   // ========== DEVICES ==========
   
   getDevicesSignal() {
@@ -59,20 +92,18 @@ export class DataService {
     console.log('📡 Fetching devices from Supabase via direct fetch...');
     
     // Direct fetch workaround - Supabase JS client promises don't resolve
-    const token = localStorage.getItem('supabase.auth.token');
+    const token = this.getValidToken();
     if (!token) {
-      console.warn('⚠️ No auth token found, using mock data');
+      console.warn('⚠️ No valid auth token found, using mock data');
       this.devices.set(MOCK_DEVICES);
       return of(MOCK_DEVICES);
     }
-
-    const tokenData = JSON.parse(token);
     
     return from(
       fetch(`${environment.supabase.url}/rest/v1/devices?order=created_at.desc`, {
         headers: {
           'apikey': environment.supabase.anonKey,
-          'Authorization': `Bearer ${tokenData.access_token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         }
       })
@@ -140,20 +171,18 @@ export class DataService {
     }
 
     console.log('📤 Adding new device via direct fetch:', device);
-    const token = localStorage.getItem('supabase.auth.token');
+    const token = this.getValidToken();
     if (!token) {
-      console.warn('⚠️ No auth token found');
-      return of(null as any);
+      console.warn('⚠️ No valid auth token found');
+      throw new Error('Vaše prihlásenie vypršalo. Prosím prihláste sa znova.');
     }
-
-    const tokenData = JSON.parse(token);
 
     return from(
       fetch(`${environment.supabase.url}/rest/v1/devices`, {
         method: 'POST',
         headers: {
           'apikey': environment.supabase.anonKey,
-          'Authorization': `Bearer ${tokenData.access_token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=representation',
         },
@@ -1126,3 +1155,4 @@ export class DataService {
     );
   }
 }
+
