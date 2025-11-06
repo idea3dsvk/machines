@@ -1,0 +1,1 @@
+import{Na as e,P as i,Yb as n}from"./chunk-2YHSOBKZ.js";var r=class r{constructor(){this.translationService=i(n)}transform(t){return this.translationService.getTranslation(t)}};r.\u0275fac=function(o){return new(o||r)},r.\u0275pipe=e({name:"translate",type:r,pure:!1});var a=r;export{a};
