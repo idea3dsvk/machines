@@ -96,7 +96,12 @@
               <td class="py-3 px-4 text-gray-600">{{ part.sku }}</td>
               <td class="py-3 px-4 text-gray-600">
                 @if (part.deviceName) {
-                  <span class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">{{ part.deviceName }}</span>
+                  <div class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                    <div class="font-semibold">{{ part.deviceName }}</div>
+                    @if (part.deviceType) {
+                      <div class="text-blue-600 text-xs">{{ part.deviceType }}</div>
+                    }
+                  </div>
                 } @else {
                   <span class="text-gray-400 text-sm">Všeobecný</span>
                 }

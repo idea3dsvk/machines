@@ -33,6 +33,7 @@ export interface SparePart {
   location: string;
   deviceId?: string; // Optional: ID zariadenia ku ktorému patrí
   deviceName?: string; // Optional: Názov zariadenia
+  deviceType?: string; // Optional: Typ zariadenia
   lastChange?: {
     date: string;
     changedBy: string;

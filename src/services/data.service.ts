@@ -754,7 +754,7 @@ export class DataService {
     const tokenData = JSON.parse(token);
     
     return from(
-      fetch(`${environment.supabase.url}/rest/v1/spare_parts?select=*,devices:device_id(name)&order=created_at.desc`, {
+      fetch(`${environment.supabase.url}/rest/v1/spare_parts?select=*,devices:device_id(name,type)&order=created_at.desc`, {
         headers: {
           'apikey': environment.supabase.anonKey,
           'Authorization': `Bearer ${tokenData.access_token}`,
@@ -785,6 +785,7 @@ export class DataService {
       location: dbPart.location,
       deviceId: dbPart.device_id || undefined,
       deviceName: dbPart.devices?.name || dbPart.device_name || undefined,
+      deviceType: dbPart.devices?.type || undefined,
     };
   }
 
