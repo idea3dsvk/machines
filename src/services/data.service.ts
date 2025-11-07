@@ -1,4 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Device, SparePart, MaintenanceLog } from '../models';
 import { Observable, of, delay, tap, catchError, map, from } from 'rxjs';
 import { ApiService } from '../core/services/api.service';
@@ -31,6 +32,7 @@ const MOCK_LOGS: MaintenanceLog[] = [
 export class DataService {
   private apiService = inject(ApiService);
   private supabaseService = inject(SupabaseService);
+  private router = inject(Router);
   
   private devices = signal<Device[]>(MOCK_DEVICES);
   private parts = signal<SparePart[]>(MOCK_PARTS);
@@ -57,7 +59,8 @@ export class DataService {
         // Use setTimeout to avoid navigation during HTTP call
         setTimeout(() => {
           alert('Vaše prihlásenie vypršalo. Prosím prihláste sa znova.');
-          window.location.href = '/login';
+          // Use Angular Router for proper navigation
+          this.router.navigate(['/login']);
         }, 100);
         return null;
       }
