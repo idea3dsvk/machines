@@ -1,4 +1,12 @@
 <div class="flex h-screen bg-gray-100">
+  <!-- Overlay for mobile -->
+  @if (sidebarOpen()) {
+    <div 
+      (click)="toggleSidebar()"
+      class="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
+    ></div>
+  }
+  
   <!-- Sidebar -->
   <aside 
     [class.translate-x-0]="sidebarOpen()" 
@@ -11,23 +19,23 @@
         <span class="ml-3 text-2xl font-semibold">MaintHub</span>
     </div>
     <nav class="mt-8">
-      <a routerLink="/dashboard" routerLinkActive="bg-gray-700" [routerLinkActiveOptions]="{exact: true}" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
+      <a routerLink="/dashboard" routerLinkActive="bg-gray-700" [routerLinkActiveOptions]="{exact: true}" (click)="closeSidebarOnMobile()" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         <span class="mx-3">{{ 'DASHBOARD' | translate }}</span>
       </a>
-      <a routerLink="/devices" routerLinkActive="bg-gray-700" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
+      <a routerLink="/devices" routerLinkActive="bg-gray-700" (click)="closeSidebarOnMobile()" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
         <span class="mx-3">{{ 'DEVICES' | translate }}</span>
       </a>
-      <a routerLink="/parts" routerLinkActive="bg-gray-700" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
+      <a routerLink="/parts" routerLinkActive="bg-gray-700" (click)="closeSidebarOnMobile()" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
         <span class="mx-3">{{ 'SPARE_PARTS' | translate }}</span>
       </a>
-      <a routerLink="/maintenance" routerLinkActive="bg-gray-700" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
+      <a routerLink="/maintenance" routerLinkActive="bg-gray-700" (click)="closeSidebarOnMobile()" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
         <span class="mx-3">{{ 'MAINTENANCE' | translate }}</span>
       </a>
-      <a routerLink="/downtime" routerLinkActive="bg-gray-700" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
+      <a routerLink="/downtime" routerLinkActive="bg-gray-700" (click)="closeSidebarOnMobile()" class="flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:text-white">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         <span class="mx-3">Downtime</span>
       </a>

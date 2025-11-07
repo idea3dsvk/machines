@@ -15,7 +15,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 export class LayoutComponent {
   authService = inject(AuthService);
   translationService = inject(TranslationService);
-  sidebarOpen = signal(true);
+  sidebarOpen = signal(false); // Default closed on mobile
   languageDropdownOpen = signal(false);
 
   user = this.authService.currentUser;
@@ -25,6 +25,13 @@ export class LayoutComponent {
 
   toggleSidebar() {
     this.sidebarOpen.update(open => !open);
+  }
+
+  closeSidebarOnMobile() {
+    // Close sidebar on mobile after navigation
+    if (window.innerWidth < 1024) { // lg breakpoint
+      this.sidebarOpen.set(false);
+    }
   }
 
   toggleLanguageDropdown() {
