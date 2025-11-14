@@ -1,0 +1,1 @@
+import{J as e,Sa as n,q as i}from"./chunk-JK5TQ35Y.js";var r=class r{constructor(){this.translationService=i(n)}transform(t){return this.translationService.getTranslation(t)}};r.\u0275fac=function(o){return new(o||r)},r.\u0275pipe=e({name:"translate",type:r,pure:!1});var a=r;export{a};
