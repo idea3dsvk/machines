@@ -27,15 +27,15 @@ jobs:
           cat > src/environments/environment.ts << 'EOF'
           export const environment = {
             production: true,
-            enableMockData: true,
+            enableMockData: false,
             enableLogging: false,
             apiUrl: '',
             apiTimeout: 30000,
             jwtTokenKey: 'jwt_token',
             refreshTokenKey: 'refresh_token',
             supabase: {
-              url: 'https://placeholder.supabase.co',
-              anonKey: 'placeholder-key',
+              url: 'https://qqkcnogssccsekhemyua.supabase.co',
+              anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxa2Nub2dzc2Njc2VraGVteXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDQ0NTgsImV4cCI6MjA3NzgyMDQ1OH0.1bhhRVvaQU2C9nh0LU_y-i2GfX58VcbJCve94UvU9RY',
             },
           };
           EOF
