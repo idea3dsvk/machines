@@ -28,6 +28,24 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+            - name: Create environment configuration
+        run: |
+          cat > src/environments/environment.ts << EOF
+          export const environment = {
+            production: true,
+            enableMockData: true,
+            enableLogging: false,
+            apiUrl: '',
+            apiTimeout: 30000,
+            jwtTokenKey: 'jwt_token',
+            refreshTokenKey: 'refresh_token',
+            supabase: {
+              url: 'https://placeholder.supabase.co',
+              anonKey: 'placeholder-key',
+            },
+          };
+          EOF
+
       - name: Install dependencies
         run: npm ci
 
