@@ -51,6 +51,11 @@ jobs:
 
       - name: Build Angular app
         run: npm run build:prod
+
+      - name: Prepare deployment
+        run: |
+          touch dist/.nojekyll
+          ls -la dist/
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
 
